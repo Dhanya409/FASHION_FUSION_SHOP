@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>MINI PROJECT</title>
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-hexashop.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/owl-carousel.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+
+    <script src="https://kit.fontawesome.com/37140be1a3.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    </head>
+    
+    <body>
+    
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="{% url 'index' %}" class="logo">
+                            <!-- ***** Logo Start ***** -->
+<a href="{% url 'index' %}" class="logo">
+    <img src="{% static 'assets/images/logo1.png' %}" style="width: 150px; height: auto;">
+</a>
+
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'all_products' %}">All Products</a></li>
+                            
+                            <li class="submenu">
+                                <a href="javascript:;">Categories</a>
+                                <ul>
+                                    {% for category in links %}
+                                    <li><a href="{% url 'category' category.id %}">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% if item_count > 0 %}
+                            <li class="scroll-to-section"><a href="{% url 'cart_detail' %}">My Cart<i class="fa-sharp fa-solid fa-cart-shopping"></i>({{item_count}})</a></li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <li class="scroll-to-section"><a href="{% url 'dashboard' %}">Account</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'logout' %}">Logout</a></li>
+                          
+                            {% else %}
+                            <li class="scroll-to-section"><a href="{% url 'login' %}">Login</a></li>
+                            {% endif %}
+
+
+                            <li class="scroll-to-section"><a href="{% url 'chat' %}"><i class="fas fa-comment-dots"></i> Chat</a></li>
+
+                            <li class="scroll-to-section"><a href="https://fashionrecomproject-m3nwimdahmvs7qlaryjbop.streamlit.app/"></i>Recommendation</a></li>
+                            
+
+                        </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    {% if messages %}
+        <div class="alert alert-info messages page-notification" role="alert">
+            {% for message in messages %}
+                <strong>{{ message }}<strong>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="first-item">
+                        
+                        <ul>
+                            <li><a href="#">16501 Collins Ave, Sunny Isles Beach, FL 33160, United States</a></li>
+                            <li><a href="#">fashionfusion@company.com</a></li>
+                            <li><a href="#">010-020-0340</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Shopping &amp; Categories</h4>
+                    <ul>
+                        {% for category in links %}
+                        <li><a href="{% url 'category' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Homepage</a></li>
+                        <li><a href="{% url 'all_products' %}">All Products</a></li>
+                        <li><a href="{% url 'cart_detail' %}">Shopping Cart</a></li>
+                        <li><a href="{% url 'fashion_recommendation' %}">Recommendation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Administration</h4>
+                    <ul>
+                        <li><a href="{% url 'admin_login' %}">Login</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="under-footer">
+                        <p>Copyright © 2022 fashionfusion Co., Ltd. All Rights Reserved. 
+                        
+                        <br>Design: <a href="" target="_parent" title="free css templates">DHANYA R</a></p>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="{% static 'assets/js/jquery-2.1.0.min.js' %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'assets/js/popper.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+    <!-- Plugins -->
+    <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+    <script src="{% static 'assets/js/accordions.js' %}"></script>
+    <script src="{% static 'assets/js/datepicker.js' %}"></script>
+    <script src="{% static 'assets/js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'assets/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'assets/js/imgfix.min.js' %}"></script> 
+    <script src="{% static 'assets/js/slick.js' %}"></script> 
+    <script src="{% static 'assets/js/lightbox.js' %}"></script> 
+    <script src="{% static 'assets/js/isotope.js' %}"></script> 
+
+    <!-- Global Init -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+    <script>
+        $(function() {
+            var selectedClass = "";
+            $("p").click(function(){
+            selectedClass = $(this).attr("data-rel");
+            $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("."+selectedClass).fadeOut();
+            setTimeout(function() {
+                $("."+selectedClass).fadeIn();
+                $("#portfolio").fadeTo(50, 1);
+            }, 500);
+                
+            });
+        });
+    </script>
+
+	<script>
+		// Automatically dismiss messages after 5 seconds
+		setTimeout(function(){
+			$('.messages').fadeOut('slow');
+		}, 5000);
+	</script>
+    
+    </body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Recommendation</title>
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for a stylish look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for fashion-related icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Inline CSS for additional styling -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container-fluid {
+            padding: 30px;
+        }
+        .sidebar {
+            padding: 20px;
+            background-color: #f1f1f1;
+            height: 100vh;
+            border-right: 2px solid #ddd;
+        }
+        .main-content {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .btn-submit {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn-submit:hover {
+            background-color: #e5533d;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-left: 4px solid #28a745;
+            border-radius: 5px;
+        }
+        .recommended-image {
+            margin-top: 20px;
+            max-width: 300px;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c');
+            background-size: cover;
+            color: white;
+            border-radius: 10px;
+        }
+        .header h1 {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+        .fashion-image {
+            height: 400px;
+            background-size: cover;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+       
+        .fashion-image-text {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            color: rgb(79, 18, 165);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .fashion-icons {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .fashion-icons i {
+            font-size: 40px;
+            color: #ff6347;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Discover Your Style</h1>
+        <p>Get personalized fashion recommendations tailored to your preferences.</p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- Sidebar for User Input -->
+            <div class="col-md-3 sidebar">
+                <h2>Input Form</h2>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender:</label>
+                        <select id="gender" name="gender" class="form-select" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Non-Binary">Non-Binary</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Preferred Colour:</label>
+                        <select id="color" name="color" class="form-select" required>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                            <option value="Grey">Grey</option>
+                            <option value="Pink">Pink</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Brown">Brown</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Multi-coloured">Multi-coloured</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category:</label>
+                        <select id="category" name="category" class="form-select" required>
+                            <option value="Shirt">Shirt</option>
+                            <option value="Pants">Pants</option>
+                            <option value="Shoes">Shoes</option>
+                            <option value="Jacket">Jacket</option>
+                            <option value="Dress">Dress</option>
+                            <option value="Skirt">Skirt</option>
+                            <option value="T-shirt">T-shirt</option>
+                            <option value="Sweater">Sweater</option>
+                            <option value="Jeans">Jeans</option>
+                            <option value="Blouse">Blouse</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Outerwear">Outerwear</option>
+                            <option value="Swimwear">Swimwear</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="climate" class="form-label">Climate:</label>
+                        <select id="climate" name="climate" class="form-select" required>
+                            <option value="Hot">Hot</option>
+                            <option value="Cold">Cold</option>
+                            <option value="Rainy">Rainy</option>
+                            <option value="Humid">Humid</option>
+                            <option value="Dry">Dry</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="usage" class="form-label">Usage:</label>
+                        <select id="usage" name="usage" class="form-select" required>
+                            <option value="Casual">Casual</option>
+                            <option value="Formal">Formal</option>
+                            <option value="Athletic">Athletic</option>
+                            <option value="Business">Business</option>
+                            <option value="Party">Party</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Lounge">Lounge</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Get Recommendation</button>
+                </form>
+            </div>
+
+            <!-- Main content area for displaying results -->
+            <div class="col-md-9 main-content">
+                <h1>Fashion Recommendation</h1>
+                <p>Submit the form on the left to get fashion recommendations based on your preferences.</p>
+
+                <!-- Display the recommendation if it exists -->
+                {% if recommendation %}
+                    <div class="result">
+                        <h4>Recommended Fashion Item:</h4>
+                        <p>{{ recommendation }}</p>
+
+                        <!-- Display the image if it exists -->
+                        {% if image_url %}
+                            <img src="{{ image_url }}" alt="Recommended Fashion Image" class="recommended-image">
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <!-- Add a grid with example fashion images for more visual appeal -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="fashion-image" style="background-image: url('https://tse1.mm.bing.net/th?id=OIP.7Ll_yFO2ZdwVp8AT4B8X_QHaJ3&pid=Api&P=0&h=220');">
+                            <div class="fashion-image-overlay"></div>
+                            <div class="fashion-image-text">Casual Style</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fashion-image" style="background-image: url('https://i.pinimg.com/originals/e8/42/df/e842df6b73e2a90ce077a537b885448a.jpg');">
+                            <div class="fashion-image-overlay"></div>
+                            <div class="fashion-image-text">Formal Look</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fashion-image" style="background-image: url('https://tse4.mm.bing.net/th?id=OIP.ccsG94Hr3ARJgqfN6xEV3QHaK3&pid=Api&P=0&h=220');">
+                            <div class="fashion-image-overlay"></div>
+                            <div class="fashion-image-text">Street Fashion</div>
+                        </div>
+                    </div>
+                </div>
+
+      
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+</body>
+<li class="scroll-to-section"></li>
+    <a href="{% url 'index' %}">
+        <button type="button" style="background-color: rgb(19, 250, 62); color: white;">Home</button>
+    </a>
+</li>
+</html>

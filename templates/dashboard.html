@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="container left-content px-5">
+                        <h2><big>User Profile</big></h2>
+                        <div class="contact-info-item mt-4">
+                            <h3>{{customer.first_name}} {{customer.last_name}}</h3>
+                            <p><i class="fa fa-phone mx-3"></i>{{customer.phone}}</p>
+                            <p><i class="fa fa-envelope mx-3"></i>{{customer.email}}</p>
+                            <p><i class="fa fa-location-dot mx-3"></i>{{customer.address}}</p>
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-success me-3" data-toggle="modal" data-target="#editProfileModal">
+									Edit Profile
+								</button>
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#changePassword">
+                                    Change Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="container right-content px-5">
+                        <h3>Recent Orders</h3>
+                        <ul><hr>
+                            {% for order in orders %}
+                            {% if forloop.counter <= 5 %}
+                            <li><a href="{% url 'order_details' order.id %}">
+                                {{ order.product.name|truncatechars:40 }}
+                                    ({{order.quantity}})
+                                    -  STATUS: {{order.order.status}}
+                                </a><hr>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <div class="button-container" style="display: flex; justify-content: space-around; padding-top: 20px;">
+                            <!-- First Button -->
+                            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#seeMoreOrders" style="padding: 10px 20px; border-radius: 5px;">
+                                See more
+                            </button>
+                        
+                            <!-- Second Button -->
+                            <li class="scroll-to-section">
+                                <a href="https://fashionrecomproject-m3nwimdahmvs7qlaryjbop.streamlit.app/" style="padding: 10px 20px; border-radius: 5px; background-color: #0ba510ec; color: white; text-decoration: none; display: inline-block;">
+                                    Dataset Recommendation
+                                </a>
+                            </li>
+                        
+                            <!-- Third Button -->
+                            <div class="main-border-button">
+                                <a href="{% url 'fashion_recommendation' %}" style="padding: 10px 20px; border-radius: 5px; background-color: #0ba510ec; color: white; text-decoration: none; display: inline-block;">
+                                    Fashion Recommendation
+                                </a>
+                                
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <!-- Modal to Edit Profile -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm" action="{% url 'edit_profile' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <label for="firstName">First Name:</label>
+                                <input type="text" class="form-control" id="firstName" name="first_name" value="{{ customer.first_name }}">
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="lastName">Last Name:</label>
+                                <input type="text" class="form-control" id="lastName" name="last_name" value="{{ customer.last_name }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmail">Email:</label>
+                            <input type="email" class="form-control" id="editEmail" name="email" value="{{ customer.email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPhoneNumber">Phone Number:</label>
+                            <input type="text" class="form-control" id="editPhoneNumber" name="phone" value="{{ customer.phone }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddress">Address:</label>
+                            <input type="text" class="form-control" id="editAddress" name="address" value="{{ customer.address }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal to Change Password-->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePassword" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm" action="{% url 'change_password' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="oldpassword">Old Password:</label>
+                            <input type="password" class="form-control" id="oldPassword" name="oldPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password:</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword">
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Change Password</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal to View Orders -->
+    <div class="modal fade"  id="seeMoreOrders" tabindex="-1" aria-labelledby="seeMoreOrdersLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable"  role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seeMoreOrdersLabel">Past Orders</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% for order in orders %}
+                    <li>
+                        <a href="{% url 'order_details' order.id %}">
+                            {{ order.product.name|truncatechars:40 }}
+                                ({{order.quantity}})
+                                -  STATUS: {{order.order.status}}
+                        </a><hr>
+                    </li>
+                    {% endfor %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+{% endblock %}

@@ -1,0 +1,104 @@
+<!-- templates/stock_chart.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Stock Levels by Category</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+        }
+        #chartContainer {
+            width: 40%; /* Make the chart container smaller */
+            margin: 0 auto; /* Center the chart */
+            background: white; /* White background for the chart */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+            padding: 20px; /* Add padding */
+        }
+        canvas {
+            max-width: 100%; /* Responsive width */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Stock Levels by Category</h1>
+    
+    <div id="chartContainer">
+        <canvas id="stockChart" width="400" height="100"></canvas>
+    </div>
+   
+    
+    <script>
+        const ctx = document.getElementById('stockChart').getContext('2d');
+        const stockChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {{ categories|safe }},
+                datasets: [{
+                    label: 'Total Stock Quantity',
+                    data: {{ quantities|safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)', // Added more colors for diversity
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)', // Corresponding border colors
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14, // Increased font size for legend
+                                color: '#333'
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Product Stock Levels by Category',
+                        font: {
+                            size: 18, // Increased font size for title
+                            weight: 'bold',
+                            color: '#4a90e2'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+   <ul style="text-align: right; list-style-type: none; padding: 0; margin: 0;">
+    <li style="display: inline-block;">
+        <a href="http://127.0.0.1:8000/admin/" style="padding: 10px 15px; font-size: 16px; background-color: #4CAF50; color: white; border-radius: 5px; text-decoration: none; transition: background-color 0.3s;">Back to Admin</a>
+    </li>
+</ul>
+
+</body>
+</html>

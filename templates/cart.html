@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-heading about-page-heading" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="inner-content">
+                    <h2>SHOPPING CART</h2>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section" id="products">
+    <div class="container">
+        {% if not cart_items %}
+        <div class="text-center">
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    Your Shopping Cart is Empty!
+                </h1>
+                <br>
+                <p class="text-center">
+                    Please click <a href="{% url 'index' %}">Here</a> to continue shopping.
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <div class="container">
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    <b>Your Shopping Cart</b>
+                </h1>
+                <br>
+            </div>
+            <div class="row mx-auto">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                    <table class="table my_custom_table">
+                        <thead class="my_custom_thead">
+                        <tr>
+                            <th colspan="5">Your Items</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for cart_item in cart_items %}
+                        <tr>
+                            <td>
+                                <a href="{{cart_item.product.get_absolute_url}}"><img src="{{cart_item.product.image.url}}" style="width: 100px;" class="float-left rounded custom_image"></a>
+                            </td>
+                            <td class="text-left">
+                                {{cart_item.product.name}}
+                                <br>
+                                SKU: {{cart_item.product.id}}
+                                <br>
+                                Price:  {{cart_item.product.price}}
+                                <br>
+                                Qty: {{cart_item.quantity}} x {{cart_item.product.name}}
+                            </td>
+                            <td>
+                                {{cart_item.sub_total}}
+                            </td>
+                            {% if cart_item.quantity < cart_item.product.quantity %}
+                            <td>
+                                <a href="{% url 'add_cart' cart_item.product.id %}" class="custom_a"> <i class="fa-sharp fa-solid fa-plus custom_icon"></i></a>
+                                &emsp;<a href="{% url 'cart_remove' cart_item.product.id %}" class="custom_a"><i class="fa-sharp fa-solid fa-minus custom_icon"></i></a>
+                                &emsp;<a href="{% url 'full_remove' cart_item.product.id %}" class="custom_a"><i class="fa-sharp fa-solid fa-trash custom_icon"></i></a>
+                            </td>
+                            {% else %}
+                            <td>
+                                &emsp;<a href="{% url 'cart_remove' cart_item.product.id %}" class="custom_a"><i class="fa-sharp fa-solid fa-minus custom_icon"></i></a>
+                                &emsp;<a href="{% url 'full_remove' cart_item.product.id %}" class="custom_a"><i class="fa-sharp fa-solid fa-trash custom_icon"></i></a>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="accordion accordion-flush" id="accordionExample">
+                        <!-- Address Accordion -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Shipping Address
+                                </button>
+                                <div class="mx-2">
+                                 
+                                    <a href="{% url 'similar_products' %}" class="btn btn-dark btn-sm custom_black_button">Similar Products</a>
+                                </div>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="shipping-address-form">
+                                        <div class="form-group">
+                                            <label for="address"><strong>Address:</strong></label>
+                                            <textarea class="form-control" id="address" name="address">{{customer.address}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Payment Accordion -->
+                        <!-- <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Payment Details
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <form id="paymentForm" action="" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="cod_checked" value="" id="flexCheckChecked" checked>
+                                            <label class="form-check-label mx-2" for="flexCheckChecked">
+                                                <h6>Cash On Delivery</h6>
+                                            </label>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                    <table class=" table my_custom_table">
+                        <thead class="my_custom_thead">
+                        <tr>
+                            <th>Checkout</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Please review your shopping cart items before checkout!</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Your Total is: <strong>{{total}}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form action="{% url 'place_order' %}" method="POST">
+                        {% csrf_token %}
+                        <h5><b>Payment Method</b></h5><hr>
+                        <input type="hidden" name="address" id="hiddenAddress" value="{% if customer.address %}{{customer.address}}{% endif %}" required>
+                        <div class="payment-select">
+                            <ul>
+                                <li class="getwayToggle">
+                                    <input id="getway" type="radio" name="payment"
+                                        value="Cash On Delivery" checked>
+                                    <label for="getway">Pay with Card</label>
+                                </li>
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{ STRIPE_PUBLIC_KEY }}"
+                                    data-name="FASHION FUSION"
+                                    data-description="Payment Gateway"
+                                    data-amount="0"
+                                    data-currency="INR"
+                                    data-locale="auto"
+                                    data-email="{{ request.user.email }}"
+                                    data-allow-remember-me="true">
+                                </script>
+                            </ul>
+                        </div>
+                        <div class="payment-bottom">
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-warning btn-block custom_button">Place Order</button>
+                            </div>
+                        </div>
+                    </form> 
+                    <div class="row d-flex justify-content-center">
+                        <div class="mx-2">
+                            <a href="{% url 'index' %}" class="btn btn-secondary btn-block custom_button">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the external input field and the hidden input field
+        var addressInput = document.getElementById('address');
+        var hiddenAddressInput = document.getElementById('hiddenAddress');
+
+        // Update hidden input field when external input field changes
+        addressInput.addEventListener('input', function() {
+            hiddenAddressInput.value = addressInput.value;
+        });
+
+        // Handle form submission when "Place Order" button is clicked
+        var placeOrderBtn = document.getElementById('placeOrderBtn');
+        placeOrderBtn.addEventListener('click', function() {
+            document.getElementById('orderForm').submit();
+        });
+    });
+
+</script>
+{% endblock %}

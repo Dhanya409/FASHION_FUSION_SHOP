@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Category</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Category</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Left Panel: Current Data -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Current Data</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> {{ category.name }}</p>
+                        <p><strong>Description:</strong> {{ category.description }}</p>
+                        <div class="mt-3">
+                            <p><strong>Image:</strong></p>
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-width: 500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Right Panel: Editable Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Edit Category</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ form.name.id_for_label }}" class="control-label">Category Name:</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}" class="control-label">Description:</label>
+                                {{ form.description }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.image.id_for_label }}" class="control-label">Image:</label>
+                                {{ form.image }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Category</button>
+                            <a href="{% url 'home' %}" class="btn btn-warning">Done</a>
+                            
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

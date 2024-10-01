@@ -1,0 +1,15 @@
+Django>=4.0,<5.0
+djangorestframework
+django-crispy-forms
+Pillow
+psycopg2
+mysqlclient
+requests
+python-decouple
+google-generativeai
+matplotlib
+gunicorn
+openpyxl
+stripe
+django-allauth
+django-jazzmin

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="page-heading about-page-heading" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                        <h2>Order Details</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+
+    <!-- ***** Product Area Starts ***** -->
+    <section class="section" id="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                <div class="left-images">
+                    <img src="{{ order.product.image.url }}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="right-content">
+                    <h4>{{ order.product.name }}</h4>
+                    <span class="price">${{order.product.price}}</span>
+                    <p>Your Item will be delivered by {{order.order.delivery_date}}</p>
+                    <p><b>Order Date: </b> {{ order.order.order_date }}</p>
+                    <p><b>Order Status: </b> {{ order.order.status }}</p>
+                    <p><b>Delivery Address: </b> {{ order.order.delivery_address }}</p>
+                    <p><b>Order Quantity: </b> {{ order.quantity }}</p>
+                    <p><b>Subtotal: </b>{{ subtotal|floatformat:"2" }}</p>
+                    <div class="total">
+                        <div class="main-border-button"><a href="{% url 'product' order.product.id %}">Buy Again</a></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Product Area Ends ***** -->
+    
+{% endblock %}

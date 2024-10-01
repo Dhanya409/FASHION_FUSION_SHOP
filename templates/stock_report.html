@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Report</h1>
+    
+    <h2>Overview</h2>
+    <p>Total Products: {{ total_products }}</p>
+    <p>Low Stock Products: {{ total_low_stock }}</p>
+
+    <!-- Button to trigger Excel file download -->
+    <a href="?export=true" class="btn">Download Stock Report as Excel File</a>
+
+    <h2>Low Stock Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Reorder Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in low_stock_products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.reorder_level }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No low stock products at the moment.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>All Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Reorder Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in all_products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.reorder_level }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No products available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="back-to-admin">
+        <a href="http://127.0.0.1:8000/admin/" class="btn btn-dark btn-sm custom_black_button">Back to Admin</a>
+    </div>
+    <div class="back-to-admin"></div>
+        <a href="http://127.0.0.1:8000/customer_report/" class="btn btn-dark btn-sm custom_black_button">More Reports</a>
+    </div>
+
+
+    
+</body>
+</html>

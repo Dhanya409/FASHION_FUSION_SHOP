@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <!-- Include Bootstrap CSS if needed -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Add Product</h1>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}" class="control-label">Product Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}" class="control-label">Description:</label>
+                {{ form.description }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.price.id_for_label }}" class="control-label">Price:</label>
+                {{ form.price }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.category.id_for_label }}" class="control-label">Category:</label>
+                {{ form.category }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.image.id_for_label }}" class="control-label">Image:</label>
+                {{ form.image }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.quantity.id_for_label }}" class="control-label">Quantity:</label>
+                {{ form.quantity }}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Product</button>
+        </form>
+    </div>
+        
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

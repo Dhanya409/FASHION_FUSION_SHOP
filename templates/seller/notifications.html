@@ -1,0 +1,89 @@
+{% extends 'seller/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Notifications</h1>
+</div>
+
+<div class="card shadow mb-4">
+    <!-- Notification 1 -->
+    {% for item in notifications %}
+    <div class="border-left-primary">
+        <!-- Card Header - Accordion -->
+        <a href="#notificationCard{{item.id}}" class="d-block card-header py-3" data-toggle="collapse"
+            role="button" aria-expanded="true" aria-controls="notificationCard{{item.id}}">
+            <h6 class="m-0 font-weight-bold text-primary">{{ item.subject }} [ID: NOTIF{{item.id}}]</h6>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse" id="notificationCard{{item.id}}">
+            <div class="card-body">
+                <p>{{ item.message }}</p>
+                <p>Current Quantity: {{ item.inventory.quantity_in_stock }}</p>
+                <p><strong>Requested Quantity: {{ item.quantity }}</strong></p>
+                <a href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#acceptRequestModal">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Accept Request</span>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target="#declineRequestModal">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="text">Decline Request</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accept Request Modal-->
+    <div class="modal fade" id="acceptRequestModal" tabindex="-1" role="dialog" aria-labelledby="acceptRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="acceptRequestModalLabel">Accept The Request?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>By clicking on 'Accept' you agree to send the following item(s) to the website inventory.</p>
+                    <b>{{item.quantity_to_restock}} x {{item.inventory.name}}</b>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-success" href="{% url 's_accept_restock' item.id %}">Accept</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decline Request Modal-->
+    <div class="modal fade" id="declineRequestModal" tabindex="-1" role="dialog" aria-labelledby="declineRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="declineRequestModalLabel">Are You Sure?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>By clicking on 'Decline' you decline the restock request and the request notification [ID: NOTIF{{item.id}}] will be deleted.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" href="">Decline</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+  
+
+{% endblock %}

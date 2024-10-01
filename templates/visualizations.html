@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 5px 15px;
+            font-size: 16px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+        /* Style the chart container */
+        #myChart {
+            width: 80% !important; /* Set the chart width */
+            height: 300px !important; /* Set the chart height */
+            margin: 20px auto; /* Center the chart and add margin */
+        }
+        /* Style for the cards */
+        .cards-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 30%; /* Adjust the width of each card */
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px; /* Space between the cards and title */
+        }
+        .card img {
+            width: 100%; /* Image should fit card width */
+            border-radius: 10px;
+            height: 400px; /* Adjusted image height */
+            object-fit: cover;
+        }
+        .card h3 {
+            margin-top: 10px;
+            color: #4CAF50;
+        }
+        /* Title below cards */
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    {% load static %} <!-- Load the static files -->
+    <h1>Dataset Visualization</h1>
+    
+    <!-- Cards Section -->
+    <div class="cards-container">
+        <div class="card">
+            <img src="{% static 'assets/images/heat.png' %}" alt="Dataset Visualization 1">
+        </div>
+        <div class="card">
+            <img src="{% static 'assets/images/graph.png' %}" alt="Dataset Visualization 2">
+        </div>
+    </div>
+
+    <!-- Title below cards -->
+    <div class="title">Product Visualization</div>
+
+    <!-- Filters -->
+    <form method="GET">
+        <label for="category">Select Category:</label>
+        <select id="category" name="category">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category.name }}" {% if category.name == selected_category %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Chart Container -->
+    <canvas id="myChart"></canvas>
+
+    <script>
+        const chartData = JSON.parse('{{ chart_data|escapejs }}');
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        const colors = [
+            'rgba(75, 192, 192, 0.5)', // Light Blue
+            'rgba(255, 99, 132, 0.5)', // Light Red
+            'rgba(255, 206, 86, 0.5)', // Light Yellow
+            'rgba(153, 102, 255, 0.5)', // Light Purple
+            'rgba(255, 159, 64, 0.5)', // Light Orange
+        ];
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Product Prices',
+                    data: chartData.values,
+                    backgroundColor: colors,
+                    borderColor: colors.map(color => color.replace('0.5', '1')), // Use full opacity for border
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Allow the chart to fit the container
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Price'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Products'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <ul style="text-align: right;">
+        <li>
+            <a href="{% url 'stock_chart' %}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #4CAF50; color: white; border-radius: 5px; text-decoration: none; transition: background-color 0.3s;">View More Charts</a>
+        </li>
+    </ul>
+    
+</body>
+</html>
