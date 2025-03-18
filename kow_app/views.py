@@ -685,32 +685,34 @@ API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-fl
 
 # Define predefined responses
 PREDEFINED_RESPONSES = {
-    "Can you tell me what this THRIVEseeds is about?": "Hi, I’m Cropsy! Our e-commerce website THRIVEseeds specializes in selling high-quality crop seeds for various agricultural needs. We offer a wide range of seeds with detailed descriptions, pricing, and weather-based recommendations.",
-    "What kinds of crop seeds do you sell?": "Cropsy here! We offer a diverse range of crop seeds including vegetables, fruits, grains, and pulses. You can browse our categories to find specific types of seeds.",
-    "Can you give me details about a specific seed?": "Sure thing! Just tell me the name or category of the seed you’re interested in, and I’ll provide you with more details.",
-    "How does weather affect the seeds I should buy?": "Great question! Weather plays a crucial role in crop growth. I can help you choose the right seeds based on your local climate conditions using our weather forecasts.",
-    "Can you recommend seeds based on the current weather?": "Absolutely! Based on your location and the current weather conditions, I can suggest the best seeds for optimal growth. Just let me know your location.",
-    "How do I add items to my cart?": "To add items to your cart, simply select the desired seed, choose the quantity, and click the 'Add to Cart' button.",
-    "I want to remove an item from my cart. How do I do that?": "No problem! Go to your cart page, find the item you want to remove, and click the 'Remove' button next to it.",
+    "What is FashionFusion?": "Hi, I’m Trendy! Our e-commerce website FashionFusion specializes in offering the latest fashion trends, including clothing, accessories, and footwear for men, women, and kids.",
+    "What kinds of products do you sell?": "Trendy here! We offer a wide range of fashion products, including trendy clothes, stylish footwear, bags, accessories, and more. You can browse our categories to find the perfect look for any occasion.",
+    "Can you give me details about a specific product?": "Of course! Just tell me the name or category of the product you’re interested in, and I’ll provide you with more details.",
+    "How do I choose the right size?": "Good question! We provide detailed size charts for each product to help you find the perfect fit. You can refer to the size guide on the product page.",
+    "Can you recommend outfits based on the weather?": "Absolutely! Based on your location and the current weather conditions, I can suggest stylish outfits that are perfect for the season. Just let me know your city or town.",
+    "How do I add items to my cart?": "To add items to your cart, simply select the desired product, choose the size, color, and quantity, and click the 'Add to Cart' button.",
+    "I want to remove an item from my cart. How do I do that?": "No worries! Go to your cart page, find the item you want to remove, and click the 'Remove' button next to it.",
     "How do I check out?": "To check out, go to your cart, review the items, and click the 'Proceed to Checkout' button. Follow the prompts to enter your shipping information and payment details.",
     "I have a problem with my order. Who should I contact?": "If you have any issues with your order, please contact our customer support team through the contact form on our website or by email at rdhanya409@gmail.com.",
     "How can I track my order?": "You can track your order by visiting the 'Order Tracking' section on our website and entering your order number.",
     "How do I create an account?": "To create an account, click on the 'Sign Up' button on the homepage, fill out the required information, and submit the form. You’ll receive a confirmation email to complete the registration.",
     "How can I reset my password?": "If you’ve forgotten your password, go to the 'Login' page and click on 'Forgot Password.' Follow the instructions to reset your password.",
-    "What weather conditions should I consider when buying seeds?": "When purchasing seeds, you should consider factors like temperature, humidity, rainfall, and soil conditions. I can provide you with weather forecasts to help you make the right decision.",
+    "What factors should I consider when choosing outfits?": "When selecting outfits, consider factors like weather, occasion, body type, and personal style. I can suggest outfit ideas based on these preferences.",
     "Can you give me today’s weather forecast?": "Sure! Let me check the current weather conditions for your location. Could you share your city or town?",
-    "What is the weather forecast for the next 7 days?": "I can provide you with a 7-day weather forecast for your area. Please visit \"weather dashboard\" after login for get weather forecasting data up to 16 days from now.",
-    "How does the weather forecasting feature work?": "THRIVEseeds integrates weather data from reliable sources to help you make informed decisions. The forecasts are updated regularly, and I can provide real-time information for your specific area.",
+    "What is the weather forecast for the next 7 days?": "I can provide you with a 7-day weather forecast for your area. Please visit the 'Weather Forecast' section after login for detailed weather insights.",
+    "How does the weather recommendation feature work?": "FashionFusion integrates weather data to help you choose the perfect outfit for any occasion. The recommendations are updated regularly based on real-time weather data.",
     "What are the available payment options?": "We accept major credit cards, debit cards, UPI, and net banking. You can choose your preferred option during checkout.",
     "How can I contact customer support?": "You can contact our customer support through the contact form on our website or by emailing us at rdhanya409@gmail.com.",
-    "What’s your favorite color?": "As much as I’d love to have a favorite color, I’m here to help you with crop seed-related queries! Let me know if you need assistance with any products or weather updates.",
-    "Tell me a joke.": "I’m more of a seed and weather expert, but I can certainly help you grow some great crops! Let me know if you need assistance with anything else.",
-    "How do I fix my car engine?": "I specialize in crop seeds and weather forecasting, so I might not be able to help with that. However, if you have any questions about our products, I’d be happy to assist!",
-    "Can you predict the stock market for me?": "I’m here to provide you with weather forecasts and help with crop seed-related queries. If you’re looking for investment advice, I recommend contacting a financial expert.",
-    "How can I grow flowers in space?": "That’s an exciting question! While I can help you grow crops on Earth, space gardening is a bit out of my expertise. Let me know if you need any tips on planting crops here on Earth.",
-    "Can you recommend seeds based on the current weather?": "Absolutely! To recommend the best seeds for your area, I need to know your location. Please tell me your city or town.",
-    "how are you": "I'm just a chatbot here to assist you with crop seed-related questions. How can I help you today?",
+    "What’s your favorite color?": "As much as I’d love to have a favorite color, I’m here to help you with fashion-related queries! Let me know if you need assistance with any outfits or recommendations.",
+    "Tell me a joke.": "I’m more of a fashion expert, but I can certainly help you style your next outfit! Let me know if you need help with anything.",
+    "How do I fix my washing machine?": "I specialize in fashion advice, so I might not be able to help with that. But if you have questions about clothes or trends, I’m here to assist!",
+    "Can you predict the stock market for me?": "I’m here to provide you with outfit recommendations and fashion advice. For investment tips, you might want to contact a financial expert!",
+    "How can I style winter outfits?": "That’s an exciting question! I can suggest cozy and trendy winter outfits that keep you warm while looking stylish. Let me know your preferences!",
+    "Can you recommend outfits based on the current weather?": "Absolutely! To recommend the best outfits for your area, I need to know your location. Please tell me your city or town.",
+    "how are you": "I'm just a chatbot here to assist you with fashion and shopping queries. How can I help you today?"
 }
+
+
 
 
 
